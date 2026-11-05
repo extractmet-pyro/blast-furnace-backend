@@ -1,0 +1,37 @@
+name: backend-ci
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Unit, integration, ML, MPC, safety and non-functional tests (with coverage)
+        run: python -m pytest -q --junitxml=test-results.xml --cov=app --cov-report=term --cov-report=xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: |
+            test-results.xml
+            coverage.xml
+  security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: pip install bandit==1.9.4 pip-audit==2.10.1
+      - name: Static analysis (bandit, medium severity and above fails)
+        run: bandit -q -r app -ll
+      - name: Dependency vulnerabilities (PyPI advisory data)
+        run: pip-audit -r requirements.txt
