@@ -1,0 +1,23 @@
+Copyright (c) 2026 Extractmet Private Limited. All rights reserved.
+
+PROPRIETARY SOFTWARE - EVALUATION LICENCE
+
+This software (source code, models, data, documentation and associated files) is the
+confidential property of Extractmet Private Limited ("Extractmet").
+
+Permission is granted to the recipient named in a written agreement with Extractmet to install
+and run this software for internal evaluation and demonstration only, for the period stated in
+that agreement. No other right is granted. In particular, without Extractmet's prior written
+consent you may not: (a) copy, modify, merge, publish, distribute, sublicense or sell the
+software or any part of it; (b) use it in production or to operate, control or supervise any
+industrial plant; (c) reverse engineer the models or remove any notice.
+
+The software is a demonstration build running on synthetic data. It is not connected to any
+physical furnace, is not an approved control or safety system, and must not be used to operate
+plant equipment. It is provided "AS IS", without warranty of any kind, express or implied,
+including fitness for a particular purpose and non-infringement. In no event shall Extractmet
+be liable for any claim, damages or other liability arising from the use of the software.
+
+Third-party components are licensed under their own terms; see THIRD_PARTY_NOTICES.md.
+
+Contact: Extractmet Private Limited, IIT Madras Research Park, Chennai, India.

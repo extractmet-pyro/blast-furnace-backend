@@ -1,0 +1,59 @@
+{
+ "data_origin": "SYNTHETIC",
+ "model_version": "bf-physics-1.0.0",
+ "generated_utc": "2026-11-05T07:07:05Z",
+ "physics_sha256": "1bfdbe8811c1ccf4ad38cf1e4e6f5cfbfba0100a9aed4187d06a25d48abbc779",
+ "scenarios": [
+  {
+   "id": "S03",
+   "name": "Hot blast temperature +50 degC",
+   "status": "COMPLETED",
+   "input_hash": "81848670854ffa98109d12a6e1f475374de9f21405c038da8b55c4670247d840",
+   "max_rel_element_residual": 5.820766091346741e-11,
+   "max_rel_energy_residual": 5.334499166106703e-07,
+   "delta_final": {
+    "hmt_C": 5.790152129759917,
+    "hm_si_pct": 0.057718832297586176,
+    "production_t_d": 161.43492602315746,
+    "fuel_rate_kg_tHM": -2.7176139273724402,
+    "raft_C": 31.54018465236686,
+    "eta_CO_pct": 0.038925556017304075,
+    "pressure_drop_kPa": 1.1561356307082633
+   }
+  },
+  {
+   "id": "S14",
+   "name": "Transition to thermal instability (coke -8 %)",
+   "status": "COMPLETED",
+   "input_hash": "c64daa26f711e9308f47129b420a20ec8f34bc11ec6473d910e4a46d4d4708ab",
+   "max_rel_element_residual": 1.1641532182693481e-10,
+   "max_rel_energy_residual": 2.400949169976926e-06,
+   "delta_final": {
+    "hmt_C": -17.141413557906162,
+    "hm_si_pct": -0.003821705031184175,
+    "production_t_d": 258.48422284604203,
+    "fuel_rate_kg_tHM": -26.244885994551282,
+    "raft_C": -0.6491161869325879,
+    "eta_CO_pct": 2.0863674336480997,
+    "pressure_drop_kPa": 0.42753014208562945
+   }
+  },
+  {
+   "id": "S02b",
+   "name": "PCI +12 % with O2 +1.0 %",
+   "status": "COMPLETED",
+   "input_hash": "74e0a10e5cda075d28418a48f242788daa6efe8302f1356131b415f3dcad68dc",
+   "max_rel_element_residual": 2.9103830456733704e-11,
+   "max_rel_energy_residual": 4.825648709020827e-07,
+   "delta_final": {
+    "hmt_C": 1.2212468465131678,
+    "hm_si_pct": 0.0009998964386798148,
+    "production_t_d": 241.58413970476613,
+    "fuel_rate_kg_tHM": 8.32715036591162,
+    "raft_C": -2.0844762748479297,
+    "eta_CO_pct": -0.7602380534461375,
+    "pressure_drop_kPa": 3.6997725904409435
+   }
+  }
+ ]
+}

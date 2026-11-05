@@ -1,0 +1,10 @@
+flowchart TB
+  TOP["Top: charging matrix, layer tracker,<br/>top gas (dry/wet), uptakes"] --> SHAFT["Granular zone (stack)<br/>indirect reduction Fe2O3 > Fe3O4 > FeO > Fe<br/>by CO / H2 (shrinking core), WGS,<br/>carbonate decomposition, moisture"]
+  SHAFT --> TRZ["Thermal reserve zone<br/>near-equilibrium wustite / gas"]
+  TRZ --> CZ["Cohesive zone<br/>softening / melting index,<br/>layer permeability (Ergun)"]
+  CZ --> DRIP["Dripping zone / active coke<br/>FeO direct reduction, carburisation,<br/>Si / Mn / P transfer, NTU heat exchange"]
+  DRIP --> RW["Raceway<br/>coke + PCI combustion, RAFT,<br/>SiO generation, tuyere losses"]
+  RW --> SHAFT
+  DRIP --> HEARTH["Hearth<br/>metal / slag pools, deadman,<br/>casting through tapholes,<br/>Si-FeO, S partition"]
+  WALLS["Walls: multi-layer refractory,<br/>staves / water cooling,<br/>shell convection + radiation"] --- SHAFT
+  WALLS --- HEARTH

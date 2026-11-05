@@ -1,0 +1,10 @@
+flowchart LR
+  REC["Advisory recommendation<br/>(cloud, this software)"] --> OP["Operator reads<br/>checks, moves, verification"]
+  OP --> DEC{"Operator decision"}
+  DEC -- "acknowledge / reject" --> AUD["Audit trail<br/>(no plant effect)"]
+  DEC -- "acts on the DCS<br/>by site procedure" --> DCS["DCS operator station<br/>setpoint entry, interlocks"]
+  DCS --> SIS["SIS / interlocks<br/>(independent, never bypassed)"]
+  REC -. "no interface exists" .-x DCS
+  subgraph Future["Stage G4 only - separately engineered, on-premises"]
+    GW["Approval gateway under DCS ownership<br/>independent limit checks, MOC, HAZOP/LOPA"]
+  end

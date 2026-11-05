@@ -1,0 +1,13 @@
+flowchart TB
+  S["Sensors / lab / historian<br/>(synthetic plant in demo)"] --> Q["Data quality<br/>range, rate, flat-line, stale,<br/>lab delay at receipt time"]
+  Q --> R["Reconciliation (WLS)<br/>N, C, O balance"]
+  Q --> E["Parameter EKF<br/>wall heat, coke reactivity,<br/>reduction, permeability, biases"]
+  E -- "bounded parameter updates" --> T["Physics twin step (dt 120 s)<br/>element + energy balance every step"]
+  T --> K["KPIs, profiles, fields,<br/>streams, heat balance"]
+  T --> F["Forecast: twin clone run forward<br/>+ observer bias (+ ML shadow / hybrid)"]
+  K --> A["Alarms with evidence"]
+  F --> G{"Trust gate<br/>mode, DQ score, critical tags,<br/>freshness, balances, observer,<br/>alarms, envelope"}
+  G -- pass --> M["Linear MPC (QP, hard limits)<br/>or physics NMPC"]
+  M --> V["Independent physics<br/>re-simulation (verifier)"]
+  V --> P["Recommendation (30 min validity)<br/>operator acknowledges / rejects<br/>= audit record only"]
+  G -- fail --> X["ADVICE_SUPPRESSED<br/>reasons shown"]

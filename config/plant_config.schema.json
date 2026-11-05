@@ -1,0 +1,1369 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://extractmet.example/schemas/bf-plant-config-1.0.json",
+  "title": "Blast furnace plant configuration (versioned)",
+  "type": "object",
+  "description": "Plant-scoped configuration of the BF digital twin. Illustrative defaults must be replaced by site data. Units are embedded in key names (SI or explicitly declared industrial units).",
+  "required": [
+    "schema_version",
+    "plant",
+    "geometry",
+    "walls",
+    "materials",
+    "coke",
+    "pci",
+    "operation",
+    "tapping",
+    "targets",
+    "equipment_limits",
+    "rate_limits_per_15min",
+    "model",
+    "calibration",
+    "economics",
+    "carbon",
+    "constraints"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "plant": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "data_origin"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_.-]{3,64}$"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "preset": {
+          "type": "string"
+        },
+        "data_origin": {
+          "enum": [
+            "SYNTHETIC",
+            "SITE"
+          ]
+        },
+        "certified": {
+          "type": "boolean"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "geometry": {
+      "type": "object",
+      "required": [
+        "hearth_diameter_m",
+        "sump_depth_m",
+        "taphole_to_tuyere_m",
+        "bosh_height_m",
+        "belly_diameter_m",
+        "belly_height_m",
+        "stack_height_m",
+        "throat_diameter_m",
+        "throat_height_m",
+        "stockline_m",
+        "n_tuyeres",
+        "tuyere_diameter_m",
+        "n_tapholes",
+        "taphole_diameter_m"
+      ],
+      "properties": {
+        "hearth_diameter_m": {
+          "type": "number",
+          "minimum": 3,
+          "maximum": 20
+        },
+        "sump_depth_m": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 5
+        },
+        "taphole_to_tuyere_m": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "bosh_height_m": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 8
+        },
+        "belly_diameter_m": {
+          "type": "number",
+          "minimum": 3,
+          "maximum": 22
+        },
+        "belly_height_m": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 6
+        },
+        "stack_height_m": {
+          "type": "number",
+          "minimum": 5,
+          "maximum": 30
+        },
+        "throat_diameter_m": {
+          "type": "number",
+          "minimum": 2,
+          "maximum": 15
+        },
+        "throat_height_m": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 5
+        },
+        "stockline_m": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 4
+        },
+        "n_tuyeres": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 50
+        },
+        "tuyere_diameter_m": {
+          "type": "number",
+          "minimum": 0.06,
+          "maximum": 0.2
+        },
+        "n_tapholes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "taphole_diameter_m": {
+          "type": "number",
+          "minimum": 0.02,
+          "maximum": 0.1
+        },
+        "deadman_porosity": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 0.6
+        },
+        "chute_length_m": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 6
+        }
+      }
+    },
+    "walls": {
+      "type": "object",
+      "required": [
+        "shaft",
+        "sump_wall",
+        "upper_hearth_wall",
+        "hearth_bottom"
+      ],
+      "properties": {
+        "shaft": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "frac_from",
+              "frac_to",
+              "h_in_W_m2K",
+              "layers",
+              "cooling"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "frac_from": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "frac_to": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "h_in_W_m2K": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 5000
+              },
+              "layers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "material",
+                    "thickness_m"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "material": {
+                      "enum": [
+                        "carbon_micropore",
+                        "cast_iron_stave",
+                        "castable",
+                        "ceramic_cup",
+                        "chamotte",
+                        "copper_stave",
+                        "high_alumina",
+                        "ramming_mass",
+                        "semi_graphite",
+                        "sic_si3n4",
+                        "skull_accretion",
+                        "steel_shell"
+                      ]
+                    },
+                    "thickness_m": {
+                      "type": "number",
+                      "minimum": 0.005,
+                      "maximum": 3.0
+                    }
+                  }
+                },
+                "minItems": 1,
+                "maxItems": 8
+              },
+              "cooling": {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "enum": [
+                      "stave_water",
+                      "bottom_water",
+                      "spray",
+                      "air"
+                    ]
+                  },
+                  "water_flow_m3_h_per_m2": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 20
+                  },
+                  "water_inlet_C": {
+                    "type": "number",
+                    "minimum": 5,
+                    "maximum": 80
+                  },
+                  "pipe_d_m": {
+                    "type": "number",
+                    "minimum": 0.01,
+                    "maximum": 0.2
+                  },
+                  "pipes_per_m2": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 20
+                  },
+                  "ambient_C": {
+                    "type": "number",
+                    "minimum": -30,
+                    "maximum": 60
+                  }
+                }
+              }
+            }
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "sump_wall": {
+          "type": "object",
+          "required": [
+            "h_in_W_m2K",
+            "layers",
+            "cooling"
+          ],
+          "properties": {
+            "h_in_W_m2K": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5000
+            },
+            "layers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "material",
+                  "thickness_m"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "material": {
+                    "enum": [
+                      "carbon_micropore",
+                      "cast_iron_stave",
+                      "castable",
+                      "ceramic_cup",
+                      "chamotte",
+                      "copper_stave",
+                      "high_alumina",
+                      "ramming_mass",
+                      "semi_graphite",
+                      "sic_si3n4",
+                      "skull_accretion",
+                      "steel_shell"
+                    ]
+                  },
+                  "thickness_m": {
+                    "type": "number",
+                    "minimum": 0.005,
+                    "maximum": 3.0
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "cooling": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "stave_water",
+                    "bottom_water",
+                    "spray",
+                    "air"
+                  ]
+                },
+                "water_flow_m3_h_per_m2": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "water_inlet_C": {
+                  "type": "number",
+                  "minimum": 5,
+                  "maximum": 80
+                },
+                "pipe_d_m": {
+                  "type": "number",
+                  "minimum": 0.01,
+                  "maximum": 0.2
+                },
+                "pipes_per_m2": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "ambient_C": {
+                  "type": "number",
+                  "minimum": -30,
+                  "maximum": 60
+                }
+              }
+            },
+            "thermocouple_depth_from_cold_face_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3
+            }
+          }
+        },
+        "upper_hearth_wall": {
+          "type": "object",
+          "required": [
+            "h_in_W_m2K",
+            "layers",
+            "cooling"
+          ],
+          "properties": {
+            "h_in_W_m2K": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5000
+            },
+            "layers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "material",
+                  "thickness_m"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "material": {
+                    "enum": [
+                      "carbon_micropore",
+                      "cast_iron_stave",
+                      "castable",
+                      "ceramic_cup",
+                      "chamotte",
+                      "copper_stave",
+                      "high_alumina",
+                      "ramming_mass",
+                      "semi_graphite",
+                      "sic_si3n4",
+                      "skull_accretion",
+                      "steel_shell"
+                    ]
+                  },
+                  "thickness_m": {
+                    "type": "number",
+                    "minimum": 0.005,
+                    "maximum": 3.0
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "cooling": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "stave_water",
+                    "bottom_water",
+                    "spray",
+                    "air"
+                  ]
+                },
+                "water_flow_m3_h_per_m2": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "water_inlet_C": {
+                  "type": "number",
+                  "minimum": 5,
+                  "maximum": 80
+                },
+                "pipe_d_m": {
+                  "type": "number",
+                  "minimum": 0.01,
+                  "maximum": 0.2
+                },
+                "pipes_per_m2": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "ambient_C": {
+                  "type": "number",
+                  "minimum": -30,
+                  "maximum": 60
+                }
+              }
+            },
+            "thermocouple_depth_from_cold_face_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3
+            }
+          }
+        },
+        "hearth_bottom": {
+          "type": "object",
+          "required": [
+            "h_in_W_m2K",
+            "layers",
+            "cooling"
+          ],
+          "properties": {
+            "h_in_W_m2K": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5000
+            },
+            "layers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "material",
+                  "thickness_m"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "material": {
+                    "enum": [
+                      "carbon_micropore",
+                      "cast_iron_stave",
+                      "castable",
+                      "ceramic_cup",
+                      "chamotte",
+                      "copper_stave",
+                      "high_alumina",
+                      "ramming_mass",
+                      "semi_graphite",
+                      "sic_si3n4",
+                      "skull_accretion",
+                      "steel_shell"
+                    ]
+                  },
+                  "thickness_m": {
+                    "type": "number",
+                    "minimum": 0.005,
+                    "maximum": 3.0
+                  }
+                }
+              },
+              "minItems": 1,
+              "maxItems": 8
+            },
+            "cooling": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "stave_water",
+                    "bottom_water",
+                    "spray",
+                    "air"
+                  ]
+                },
+                "water_flow_m3_h_per_m2": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "water_inlet_C": {
+                  "type": "number",
+                  "minimum": 5,
+                  "maximum": 80
+                },
+                "pipe_d_m": {
+                  "type": "number",
+                  "minimum": 0.01,
+                  "maximum": 0.2
+                },
+                "pipes_per_m2": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "ambient_C": {
+                  "type": "number",
+                  "minimum": -30,
+                  "maximum": 60
+                }
+              }
+            },
+            "thermocouple_depth_from_cold_face_m": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 3
+            }
+          }
+        }
+      }
+    },
+    "materials": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "name",
+          "kind",
+          "moisture_pct",
+          "size_mm",
+          "bulk_density_t_m3",
+          "voidage",
+          "softening_C",
+          "melting_C",
+          "price_INR_t",
+          "chem"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "sinter",
+              "pellet",
+              "lump",
+              "hbi",
+              "dri",
+              "limestone",
+              "dolomite",
+              "quartzite",
+              "scrap"
+            ]
+          },
+          "moisture_pct": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 15
+          },
+          "size_mm": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 120
+          },
+          "bulk_density_t_m3": {
+            "type": "number",
+            "minimum": 0.3,
+            "maximum": 6
+          },
+          "voidage": {
+            "type": "number",
+            "minimum": 0.2,
+            "maximum": 0.7
+          },
+          "RI": {
+            "type": "number",
+            "minimum": 0.3,
+            "maximum": 2.0
+          },
+          "softening_C": {
+            "type": "number",
+            "minimum": 800,
+            "maximum": 1500
+          },
+          "melting_C": {
+            "type": "number",
+            "minimum": 1000,
+            "maximum": 1700
+          },
+          "price_INR_t": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000.0
+          },
+          "availability_t_day": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000.0
+          },
+          "chem_uncertainty_pct": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 20
+          },
+          "chem": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          }
+        }
+      },
+      "minProperties": 1
+    },
+    "coke": {
+      "type": "object",
+      "required": [
+        "moisture_pct",
+        "ash_pct",
+        "C_pct",
+        "S_pct",
+        "CRI",
+        "CSR",
+        "size_mm",
+        "bulk_density_t_m3",
+        "voidage",
+        "price_INR_t",
+        "ash_chem"
+      ],
+      "properties": {
+        "moisture_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 15
+        },
+        "ash_pct": {
+          "type": "number",
+          "minimum": 3,
+          "maximum": 25
+        },
+        "C_pct": {
+          "type": "number",
+          "minimum": 60,
+          "maximum": 95
+        },
+        "H_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "N_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "S_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "O_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "VM_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 5
+        },
+        "CSR": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 80
+        },
+        "CRI": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 50
+        },
+        "size_mm": {
+          "type": "number",
+          "minimum": 15,
+          "maximum": 120
+        },
+        "bulk_density_t_m3": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 0.8
+        },
+        "voidage": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 0.65
+        },
+        "price_INR_t": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "HHV_MJ_kg": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 35
+        },
+        "ash_chem": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "pci": {
+      "type": "object",
+      "required": [
+        "C_pct",
+        "H_pct",
+        "O_pct",
+        "N_pct",
+        "S_pct",
+        "ash_pct",
+        "moisture_pct",
+        "HHV_MJ_kg",
+        "price_INR_t"
+      ],
+      "properties": {
+        "C_pct": {
+          "type": "number",
+          "minimum": 50,
+          "maximum": 95
+        },
+        "H_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 7
+        },
+        "O_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 15
+        },
+        "N_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "S_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "ash_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 25
+        },
+        "moisture_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "VM_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 45
+        },
+        "HHV_MJ_kg": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 36
+        },
+        "price_INR_t": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1000000.0
+        },
+        "carrier_N2_Nm3_per_kg": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.2
+        },
+        "inject_temp_C": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200
+        },
+        "ash_chem": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": [
+        "blast_volume_Nm3_min",
+        "blast_temp_C",
+        "blast_moisture_g_Nm3",
+        "o2_enrichment_pct",
+        "pci_t_h",
+        "top_pressure_kPa_g",
+        "coke_batch_t",
+        "ore_batch_t",
+        "burden_mix"
+      ],
+      "properties": {
+        "blast_volume_Nm3_min": {
+          "type": "number",
+          "minimum": 100,
+          "maximum": 15000
+        },
+        "blast_temp_C": {
+          "type": "number",
+          "minimum": 700,
+          "maximum": 1350
+        },
+        "blast_moisture_g_Nm3": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 80
+        },
+        "o2_enrichment_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 15
+        },
+        "pci_t_h": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200
+        },
+        "ng_Nm3_h": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60000
+        },
+        "h2_Nm3_h": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "top_pressure_kPa_g": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 350
+        },
+        "coke_batch_t": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 60
+        },
+        "ore_batch_t": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 250
+        },
+        "burden_mix": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        },
+        "flux_kg_per_charge": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 20000
+          }
+        },
+        "charge_temperature_C": {
+          "type": "number",
+          "minimum": -20,
+          "maximum": 200
+        },
+        "pci_inject_temp_C": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200
+        },
+        "o2_purity_pct": {
+          "type": "number",
+          "minimum": 80,
+          "maximum": 100
+        },
+        "n_tuyeres_closed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 20
+        },
+        "blast_on": {
+          "type": "boolean"
+        },
+        "charging_matrix": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "angle_deg": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 60
+              },
+              "coke_rot": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 20
+              },
+              "ore_rot": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 20
+              }
+            },
+            "required": [
+              "angle_deg",
+              "coke_rot",
+              "ore_rot"
+            ]
+          },
+          "minItems": 1,
+          "maxItems": 12
+        }
+      }
+    },
+    "tapping": {
+      "type": "object",
+      "required": [
+        "open_level_above_taphole_m",
+        "max_cast_min",
+        "min_gap_min"
+      ],
+      "properties": {
+        "open_level_above_taphole_m": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 3
+        },
+        "max_cast_min": {
+          "type": "number",
+          "minimum": 30,
+          "maximum": 400
+        },
+        "min_gap_min": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 180
+        },
+        "taphole_erosion_mm_per_h": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 50
+        },
+        "discharge_coeff": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 1.0
+        },
+        "lab_delay_min": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 240
+        }
+      }
+    },
+    "targets": {
+      "type": "object",
+      "required": [
+        "hmt_C",
+        "si_pct"
+      ],
+      "properties": {
+        "hmt_C": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 1350,
+            "maximum": 1650
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "si_pct": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0.05,
+            "maximum": 2.0
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "s_pct_max": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.2
+        },
+        "B2": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0.6,
+            "maximum": 2.0
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "MgO_Al2O3": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "slag_Al2O3_pct_max": {
+          "type": "number",
+          "minimum": 5,
+          "maximum": 30
+        }
+      }
+    },
+    "equipment_limits": {
+      "type": "object",
+      "required": [
+        "blast_volume_Nm3_min",
+        "blast_temp_C",
+        "blast_moisture_g_Nm3",
+        "o2_enrichment_pct",
+        "pci_t_h",
+        "ore_coke_ratio"
+      ],
+      "properties": {
+        "blast_volume_Nm3_min": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 20000
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "blast_temp_C": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 600,
+            "maximum": 1400
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "blast_moisture_g_Nm3": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "o2_enrichment_pct": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 20
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "pci_t_h": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 300
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "top_pressure_kPa_g": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 400
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "ore_coke_ratio": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 1.5,
+            "maximum": 8
+          },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "pressure_drop_kPa_max": {
+          "type": "number",
+          "minimum": 20,
+          "maximum": 400
+        },
+        "tuyere_velocity_m_s": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "minimum": 50,
+            "maximum": 400
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
+    "rate_limits_per_15min": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 100000.0
+      }
+    },
+    "model": {
+      "type": "object",
+      "required": [
+        "fidelity",
+        "n_z",
+        "n_r",
+        "dt_s"
+      ],
+      "properties": {
+        "fidelity": {
+          "enum": [
+            "fast",
+            "hifi"
+          ]
+        },
+        "n_z": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 60
+        },
+        "n_r": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "dt_s": {
+          "type": "number",
+          "minimum": 30,
+          "maximum": 600
+        },
+        "n_sub": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 6
+        },
+        "grid_cluster": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 0.95
+        },
+        "hifi": {
+          "type": "object"
+        }
+      }
+    },
+    "calibration": {
+      "type": "object",
+      "properties": {
+        "kinetic_multipliers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0.05,
+            "maximum": 20
+          }
+        },
+        "permeability_mult": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 10
+        },
+        "wall_h_in_mult": {
+          "type": "number",
+          "minimum": 0.2,
+          "maximum": 5
+        },
+        "pci_burnout_eta_max": {
+          "type": "number",
+          "minimum": 0.3,
+          "maximum": 1.0
+        }
+      }
+    },
+    "economics": {
+      "type": "object",
+      "required": [
+        "currency"
+      ],
+      "properties": {
+        "currency": {
+          "type": "string",
+          "maxLength": 8
+        }
+      }
+    },
+    "carbon": {
+      "type": "object",
+      "required": [
+        "boundary"
+      ],
+      "properties": {
+        "boundary": {
+          "enum": [
+            "BF_GATE_TO_GATE",
+            "BF_PLUS_UTILITIES",
+            "BF_PLUS_UPSTREAM"
+          ]
+        }
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "unit",
+          "soft"
+        ],
+        "properties": {
+          "name": {
+            "enum": [
+              "hmt_C",
+              "si_pct",
+              "pressure_drop_kPa",
+              "raft_C",
+              "top_gas_temp_C"
+            ]
+          },
+          "unit": {
+            "type": "string"
+          },
+          "low_alarm": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "high_alarm": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "low_hard": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "high_hard": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "soft": {
+            "type": "boolean"
+          }
+        }
+      },
+      "minItems": 1
+    },
+    "natural_gas": {
+      "type": "object"
+    },
+    "hydrogen": {
+      "type": "object"
+    },
+    "dust": {
+      "type": "object"
+    },
+    "mpc_default_available": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "description": "default MV availability for advisory MPC"
+    }
+  }
+}

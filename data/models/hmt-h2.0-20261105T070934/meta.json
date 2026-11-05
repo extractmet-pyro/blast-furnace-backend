@@ -1,0 +1,337 @@
+{
+  "target": "hmt",
+  "horizon_h": 2.0,
+  "algorithm": "HistGradientBoostingRegressor",
+  "hybrid_form": "physics + bounded ML residual",
+  "correction_bound": 40.0,
+  "correction_shrinkage_alpha": 0.1,
+  "alpha_selection": {
+    "alpha": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "validation_RMSE": [
+      6.056832622728906,
+      6.006155743083717,
+      6.019133303938574,
+      6.095358740957582,
+      6.232511866120601,
+      6.426693058772974,
+      6.672925648619793,
+      6.965691873914292,
+      7.299394727140317,
+      7.668692001434971,
+      8.0686977990951
+    ]
+  },
+  "physics_base": "physics twin + EKF observer bias at forecast time",
+  "seed": 7,
+  "data_origin": "SYNTHETIC",
+  "scope": "DEMO-SYNTHETIC",
+  "approval_status": "NOT_APPROVED_FOR_PLANT_USE",
+  "dataset_rows": 8402,
+  "dataset_hash": "668ac2ef1b9dc12e35eca82c7ede36a14a4cf1fd294ebb04c217a8e7f78fa8c8",
+  "split": {
+    "train": [
+      0,
+      4980
+    ],
+    "validation": [
+      5041,
+      6660
+    ],
+    "test": [
+      6721,
+      8401
+    ],
+    "method": "chronological contiguous blocks with embargo"
+  },
+  "metrics": {
+    "validation": {
+      "hybrid": {
+        "n": 1620,
+        "MAE": 4.794699553442377,
+        "RMSE": 6.006155743083717,
+        "bias": -0.15134040929018427,
+        "R2": 0.5144713383992183
+      },
+      "physics_only": {
+        "n": 1620,
+        "MAE": 4.808166666666663,
+        "RMSE": 6.056832622728906,
+        "bias": 0.3095740740740668,
+        "R2": 0.5062434864572019
+      },
+      "persistence": {
+        "n": 1620,
+        "MAE": 6.082907407407412,
+        "RMSE": 7.751646479822733,
+        "bias": 0.5283888888888808,
+        "R2": 0.19125872307442504
+      },
+      "arx_ridge": {
+        "n": 1620,
+        "MAE": 4.828861990094376,
+        "RMSE": 5.9935660523490055,
+        "bias": -0.8309042606204077,
+        "R2": 0.51650466869876
+      },
+      "interval95_coverage": 0.95,
+      "ood_fraction": 0.10617283950617284
+    },
+    "test": {
+      "hybrid": {
+        "n": 1681,
+        "MAE": 4.235265557550102,
+        "RMSE": 5.15158921390016,
+        "bias": 0.7513766961353934,
+        "R2": 0.20623339228232285
+      },
+      "physics_only": {
+        "n": 1681,
+        "MAE": 4.262308149910758,
+        "RMSE": 5.172423239196273,
+        "bias": 0.7639381320642541,
+        "R2": 0.19980011780021734
+      },
+      "persistence": {
+        "n": 1681,
+        "MAE": 5.559530041641874,
+        "RMSE": 6.755113360557299,
+        "bias": 0.6777929803688264,
+        "R2": -0.36482087854383627
+      },
+      "arx_ridge": {
+        "n": 1681,
+        "MAE": 8.517006016465366,
+        "RMSE": 10.544762011579175,
+        "bias": 7.582215185138168,
+        "R2": -2.325706654491427
+      },
+      "interval95_coverage": 0.9869125520523498,
+      "ood_fraction": 0.0148720999405116
+    }
+  },
+  "beats_baselines_on_test": false,
+  "promotion_rule": "test RMSE <= 0.98 x best baseline",
+  "feature_importance": [
+    {
+      "feature": "phys_hmt_corrected_C",
+      "importance": 0.14376994334994606
+    },
+    {
+      "feature": "last_HMT_DIP",
+      "importance": 0.04933238224854349
+    },
+    {
+      "feature": "last_HM_S",
+      "importance": 0.015344979929057997
+    },
+    {
+      "feature": "phys_si_corrected_pct",
+      "importance": 0.01359735744423259
+    },
+    {
+      "feature": "d_BL_FLOW_1h",
+      "importance": 0.006514655390201425
+    },
+    {
+      "feature": "phys_dripping_zone_height_m",
+      "importance": 0.006149564505146661
+    },
+    {
+      "feature": "d_BL_FLOW_2h",
+      "importance": 0.005592803759264076
+    },
+    {
+      "feature": "d_BL_TEMP_4h",
+      "importance": 0.005350302351746643
+    },
+    {
+      "feature": "age_HM_SI_h",
+      "importance": 0.0031212949532643344
+    },
+    {
+      "feature": "d_BL_MOIST_1h",
+      "importance": 0.0029139940549707255
+    },
+    {
+      "feature": "d_BL_O2_1h",
+      "importance": 0.0022736785293970088
+    },
+    {
+      "feature": "d_BL_FLOW_4h",
+      "importance": 0.002264731180872855
+    }
+  ],
+  "drift": {
+    "features": [
+      {
+        "feature": "COKE_BATCH",
+        "psi": 13.788454919488661,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_CO2",
+        "psi": 12.42965949101186,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_O2",
+        "psi": 12.429659087873238,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_si_pct",
+        "psi": 11.02321654280443,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_TEMP",
+        "psi": 10.816069496139999,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "ST_Q_BELLY",
+        "psi": 9.884362152128888,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "ST_Q_BOSH",
+        "psi": 9.446364842460858,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_hmt_C",
+        "psi": 9.44537131119738,
+        "ks_p": 7.502097187125011e-203,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_raft_C",
+        "psi": 9.150585755468061,
+        "ks_p": 2.9e-322,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_TEMP",
+        "psi": 7.873378685268282,
+        "ks_p": 1.4e-322,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "PCI_RATE",
+        "psi": 7.604166356727155,
+        "ks_p": 2e-321,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_hmt_corrected_C",
+        "psi": 4.711906884404595,
+        "ks_p": 3.246e-321,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_si_corrected_pct",
+        "psi": 4.37787480924725,
+        "ks_p": 9.47686567416235e-227,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_FLOW",
+        "psi": 2.8169633778856813,
+        "ks_p": 3.122e-321,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_H2",
+        "psi": 2.5180959359867603,
+        "ks_p": 5.809502579961193e-258,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "DP_TOTAL",
+        "psi": 2.1183469930929943,
+        "ks_p": 9.567113284178396e-176,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_PRESS",
+        "psi": 1.8650207598021113,
+        "ks_p": 2.1624037957936436e-140,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_MOIST",
+        "psi": 0.5656083594657995,
+        "ks_p": 7.4058674441324e-12,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_CO",
+        "psi": 0.47236927739008244,
+        "ks_p": 9.784950651160484e-109,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "STOCKLINE",
+        "psi": 0.0016322629550073978,
+        "ks_p": 0.9240158038449396,
+        "status": "OK"
+      }
+    ],
+    "drifted": [
+      "BL_FLOW",
+      "BL_TEMP",
+      "BL_MOIST",
+      "BL_O2",
+      "PCI_RATE",
+      "COKE_BATCH",
+      "BL_PRESS",
+      "TG_CO",
+      "TG_CO2",
+      "TG_H2",
+      "TG_TEMP",
+      "DP_TOTAL",
+      "ST_Q_BOSH",
+      "ST_Q_BELLY",
+      "phys_hmt_C",
+      "phys_si_pct",
+      "phys_hmt_corrected_C",
+      "phys_si_corrected_pct",
+      "phys_raft_C"
+    ],
+    "watch": [],
+    "rule": "PSI > 0.25 drift, 0.10-0.25 watch"
+  },
+  "ood_threshold_mahalanobis": 64.86755743076299,
+  "interval_half_width_95": 12.225167279811387,
+  "label": "TRAINED ON SIMULATOR-GENERATED SYNTHETIC DATA - demonstrates the pipeline only; not a plant model; must be retrained and validated on site data.",
+  "model_id": "hmt-h2.0-20261105T070934",
+  "created_utc": "2026-11-05T07:09:34.402011Z",
+  "packages": {
+    "python": "3.13.18",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.1"
+  },
+  "artifact": "model.joblib",
+  "artifact_sha256": "c490e0dcd65c6e4145e6639d325b3ee6a92b80af2c2bec7ef86a9ac7ab8079c0"
+}

@@ -1,0 +1,337 @@
+{
+  "target": "hmt",
+  "horizon_h": 4.0,
+  "algorithm": "HistGradientBoostingRegressor",
+  "hybrid_form": "physics + bounded ML residual",
+  "correction_bound": 40.0,
+  "correction_shrinkage_alpha": 0.5,
+  "alpha_selection": {
+    "alpha": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "validation_RMSE": [
+      6.782204784807079,
+      6.656135147046263,
+      6.557805541333032,
+      6.488477248911435,
+      6.449085638356305,
+      6.440180059716891,
+      6.461886559032565,
+      6.513899114320528,
+      6.59550077786327,
+      6.705611412805958,
+      6.84285491573665
+    ]
+  },
+  "physics_base": "physics twin + EKF observer bias at forecast time",
+  "seed": 7,
+  "data_origin": "SYNTHETIC",
+  "scope": "DEMO-SYNTHETIC",
+  "approval_status": "NOT_APPROVED_FOR_PLANT_USE",
+  "dataset_rows": 8347,
+  "dataset_hash": "c15d06bf1b5929ca15e0d3b62f85801e2eb527503b5467a2c717d9b9a327e1eb",
+  "split": {
+    "train": [
+      0,
+      4887
+    ],
+    "validation": [
+      5008,
+      6556
+    ],
+    "test": [
+      6677,
+      8346
+    ],
+    "method": "chronological contiguous blocks with embargo"
+  },
+  "metrics": {
+    "validation": {
+      "hybrid": {
+        "n": 1549,
+        "MAE": 5.303035539767793,
+        "RMSE": 6.440180059716891,
+        "bias": -0.23000462706829788,
+        "R2": 0.4003544421095452
+      },
+      "physics_only": {
+        "n": 1549,
+        "MAE": 5.40573273079406,
+        "RMSE": 6.782204784807079,
+        "bias": 0.759160748870231,
+        "R2": 0.3349712835373819
+      },
+      "persistence": {
+        "n": 1549,
+        "MAE": 6.666810845706912,
+        "RMSE": 8.277499361197734,
+        "bias": 0.9038928340864986,
+        "R2": 0.009403217886236104
+      },
+      "arx_ridge": {
+        "n": 1549,
+        "MAE": 5.607171812103766,
+        "RMSE": 6.836860836713177,
+        "bias": -3.8818588676809047,
+        "R2": 0.3242095020257785
+      },
+      "interval95_coverage": 0.9496449322143318,
+      "ood_fraction": 0.07811491284699806
+    },
+    "test": {
+      "hybrid": {
+        "n": 1670,
+        "MAE": 4.573307843205225,
+        "RMSE": 5.676008812437162,
+        "bias": 2.076832015859988,
+        "R2": 0.030906544016166215
+      },
+      "physics_only": {
+        "n": 1670,
+        "MAE": 4.555910179640713,
+        "RMSE": 5.636957873876317,
+        "bias": 1.2079461077844371,
+        "R2": 0.044195397811674364
+      },
+      "persistence": {
+        "n": 1670,
+        "MAE": 5.9217604790419145,
+        "RMSE": 7.302724862622277,
+        "bias": 1.174227544910179,
+        "R2": -0.6041664005092817
+      },
+      "arx_ridge": {
+        "n": 1670,
+        "MAE": 6.835224373751107,
+        "RMSE": 8.189334506073328,
+        "bias": 2.530343227904791,
+        "R2": -1.0173291340577397
+      },
+      "interval95_coverage": 0.9700598802395209,
+      "ood_fraction": 0.008982035928143712
+    }
+  },
+  "beats_baselines_on_test": false,
+  "promotion_rule": "test RMSE <= 0.98 x best baseline",
+  "feature_importance": [
+    {
+      "feature": "phys_hmt_corrected_C",
+      "importance": 0.06272960388806308
+    },
+    {
+      "feature": "d_BL_FLOW_2h",
+      "importance": 0.027507867839452027
+    },
+    {
+      "feature": "last_HMT_DIP",
+      "importance": 0.012630425206251608
+    },
+    {
+      "feature": "BL_TEMP",
+      "importance": 0.011244570808637203
+    },
+    {
+      "feature": "TG_CO_mean_1h",
+      "importance": 0.01012093495462533
+    },
+    {
+      "feature": "phys_dripping_zone_height_m",
+      "importance": 0.00911818163406449
+    },
+    {
+      "feature": "d_PCI_RATE_1h",
+      "importance": 0.008847320789751775
+    },
+    {
+      "feature": "d_BL_O2_1h",
+      "importance": 0.006723979776665834
+    },
+    {
+      "feature": "d_BL_MOIST_8h",
+      "importance": 0.005727790093865925
+    },
+    {
+      "feature": "eta_meas",
+      "importance": 0.002375709830756856
+    },
+    {
+      "feature": "d_PCI_RATE_2h",
+      "importance": 0.0022453985229009543
+    },
+    {
+      "feature": "TG_CO2_mean_1h",
+      "importance": 0.002135732058562804
+    }
+  ],
+  "drift": {
+    "features": [
+      {
+        "feature": "COKE_BATCH",
+        "psi": 14.13805665767697,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_CO2",
+        "psi": 12.432987214409252,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_O2",
+        "psi": 12.43298637681249,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_si_pct",
+        "psi": 11.019593174413076,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_TEMP",
+        "psi": 10.784227447338877,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_raft_C",
+        "psi": 9.18144540432561,
+        "ks_p": 2.96e-322,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "ST_Q_BELLY",
+        "psi": 8.800468055637614,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_hmt_C",
+        "psi": 8.479203730863494,
+        "ks_p": 2.4707564149512693e-173,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "ST_Q_BOSH",
+        "psi": 8.288334791530897,
+        "ks_p": 0.0,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_TEMP",
+        "psi": 7.731223725075296,
+        "ks_p": 1.6e-322,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "PCI_RATE",
+        "psi": 7.571866774539473,
+        "ks_p": 2.05e-321,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_hmt_corrected_C",
+        "psi": 4.660313197042858,
+        "ks_p": 5.865456463276e-312,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "phys_si_corrected_pct",
+        "psi": 4.601351056534726,
+        "ks_p": 3.7277113592582074e-200,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_FLOW",
+        "psi": 2.889242197890691,
+        "ks_p": 2.964e-321,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_H2",
+        "psi": 2.6332232760058654,
+        "ks_p": 3.5082720011654558e-264,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "DP_TOTAL",
+        "psi": 2.1309855388945538,
+        "ks_p": 1.9874018531461555e-169,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_PRESS",
+        "psi": 1.8396552738296281,
+        "ks_p": 8.75860476636432e-136,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "TG_CO",
+        "psi": 0.5325775264325827,
+        "ks_p": 8.810235948522371e-119,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "BL_MOIST",
+        "psi": 0.3197189413143019,
+        "ks_p": 5.24465144775882e-17,
+        "status": "DRIFT"
+      },
+      {
+        "feature": "STOCKLINE",
+        "psi": 0.0029490674494524775,
+        "ks_p": 0.8217768298295098,
+        "status": "OK"
+      }
+    ],
+    "drifted": [
+      "BL_FLOW",
+      "BL_TEMP",
+      "BL_MOIST",
+      "BL_O2",
+      "PCI_RATE",
+      "COKE_BATCH",
+      "BL_PRESS",
+      "TG_CO",
+      "TG_CO2",
+      "TG_H2",
+      "TG_TEMP",
+      "DP_TOTAL",
+      "ST_Q_BOSH",
+      "ST_Q_BELLY",
+      "phys_hmt_C",
+      "phys_si_pct",
+      "phys_hmt_corrected_C",
+      "phys_si_corrected_pct",
+      "phys_raft_C"
+    ],
+    "watch": [],
+    "rule": "PSI > 0.25 drift, 0.10-0.25 watch"
+  },
+  "ood_threshold_mahalanobis": 65.79423311111104,
+  "interval_half_width_95": 12.431753233177412,
+  "label": "TRAINED ON SIMULATOR-GENERATED SYNTHETIC DATA - demonstrates the pipeline only; not a plant model; must be retrained and validated on site data.",
+  "model_id": "hmt-h4.0-20261105T070938",
+  "created_utc": "2026-11-05T07:09:38.929637Z",
+  "packages": {
+    "python": "3.13.18",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.1"
+  },
+  "artifact": "model.joblib",
+  "artifact_sha256": "a25c8566c12d6ccab453ccc1c533600cb8b917db451733f54e427bc493b49b63"
+}

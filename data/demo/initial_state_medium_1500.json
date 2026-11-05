@@ -1,0 +1,103 @@
+{
+ "preset": "medium_1500",
+ "cfg_sha256": "204e18f629505692aa1f7a456e3b6b8266a8d6d018c313eb468af99309dae6fc",
+ "model_version": "bf-physics-1.0.0",
+ "simulated_h": 66.0,
+ "created_utc": "2026-11-04T18:41:24.401439Z",
+ "label": "SYNTHETIC demo state",
+ "kpi_last_30h_every_3h": [
+  {
+   "hmt_C": 1521.4773,
+   "hm_si_pct": 0.4239,
+   "production_t_d": 3886.4751,
+   "fuel_rate_kg_tHM": 535.5831,
+   "eta_CO_pct": 44.4981,
+   "pressure_drop_kPa": 114.7262,
+   "top_gas_T_C": 196.4762
+  },
+  {
+   "hmt_C": 1517.2154,
+   "hm_si_pct": 0.4331,
+   "production_t_d": 3826.0726,
+   "fuel_rate_kg_tHM": 543.8208,
+   "eta_CO_pct": 44.8472,
+   "pressure_drop_kPa": 116.901,
+   "top_gas_T_C": 184.6508
+  },
+  {
+   "hmt_C": 1509.659,
+   "hm_si_pct": 0.4202,
+   "production_t_d": 4056.0537,
+   "fuel_rate_kg_tHM": 527.2541,
+   "eta_CO_pct": 45.5888,
+   "pressure_drop_kPa": 116.1494,
+   "top_gas_T_C": 179.6673
+  },
+  {
+   "hmt_C": 1507.0723,
+   "hm_si_pct": 0.4227,
+   "production_t_d": 4020.2364,
+   "fuel_rate_kg_tHM": 517.5561,
+   "eta_CO_pct": 45.9486,
+   "pressure_drop_kPa": 116.5842,
+   "top_gas_T_C": 288.7966
+  },
+  {
+   "hmt_C": 1505.5352,
+   "hm_si_pct": 0.4212,
+   "production_t_d": 4007.7995,
+   "fuel_rate_kg_tHM": 519.1622,
+   "eta_CO_pct": 46.1328,
+   "pressure_drop_kPa": 114.3234,
+   "top_gas_T_C": 213.5256
+  },
+  {
+   "hmt_C": 1504.404,
+   "hm_si_pct": 0.4181,
+   "production_t_d": 4022.4978,
+   "fuel_rate_kg_tHM": 531.6525,
+   "eta_CO_pct": 46.509,
+   "pressure_drop_kPa": 113.9359,
+   "top_gas_T_C": 153.9523
+  },
+  {
+   "hmt_C": 1503.1668,
+   "hm_si_pct": 0.4149,
+   "production_t_d": 4049.0212,
+   "fuel_rate_kg_tHM": 513.8768,
+   "eta_CO_pct": 46.5998,
+   "pressure_drop_kPa": 112.2616,
+   "top_gas_T_C": 247.6822
+  },
+  {
+   "hmt_C": 1500.9371,
+   "hm_si_pct": 0.4064,
+   "production_t_d": 4118.8712,
+   "fuel_rate_kg_tHM": 505.1622,
+   "eta_CO_pct": 46.9087,
+   "pressure_drop_kPa": 111.0232,
+   "top_gas_T_C": 236.4997
+  },
+  {
+   "hmt_C": 1497.6025,
+   "hm_si_pct": 0.4092,
+   "production_t_d": 4126.9127,
+   "fuel_rate_kg_tHM": 518.2012,
+   "eta_CO_pct": 46.9008,
+   "pressure_drop_kPa": 111.9986,
+   "top_gas_T_C": 219.8173
+  },
+  {
+   "hmt_C": 1494.3469,
+   "hm_si_pct": 0.4252,
+   "production_t_d": 3993.4848,
+   "fuel_rate_kg_tHM": 521.0231,
+   "eta_CO_pct": 47.1761,
+   "pressure_drop_kPa": 112.1608,
+   "top_gas_T_C": 168.2373
+  }
+ ],
+ "physics_sha256": "ad46583aa97d0b45d485989ad2fe6ec82807260e393109537e236e63c07cf5ac",
+ "note": "physics_sha256 covers every config section except targets, limits, prices and labels",
+ "file_sha256": "c7cf32ea89f3974ede9d226be6bb83104d81bcea6ffd587e6b94fcb2d86a9244"
+}

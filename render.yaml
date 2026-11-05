@@ -1,0 +1,53 @@
+# Render Blueprint - BACKEND repository (FastAPI). Checked against render.com/docs/blueprint-spec (Nov 2026):
+# runtime/plan/autoDeployTrigger keys, generateValue, sync:false, fromDatabase.
+# Free instances sleep after inactivity and have an ephemeral disk: the demo SQLite DB resets on restart.
+# For persistent demo state attach Render Postgres (uncomment the databases block and DATABASE_URL).
+services:
+  - type: web
+    name: bf-twin-backend
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT --proxy-headers --forwarded-allow-ips='*'
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.18
+      - key: APP_ENV
+        value: production
+      - key: DEMO_MODE
+        value: "true"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEMO_USER_PASSWORD
+        generateValue: true          # read it in the Render dashboard (Environment tab); never commit it
+      - key: CORS_ORIGINS
+        sync: false                  # set to https://<your-frontend>.onrender.com when prompted
+      - key: ALLOW_ANONYMOUS_VIEWER
+        value: "true"
+      - key: PLANT_PRESET
+        value: large_4000
+      - key: SIM_SPEED
+        value: "30"
+      - key: WORKER_THREADS
+        value: "1"
+      - key: RATE_LIMIT_PER_MIN
+        value: "600"
+      - key: ALLOW_PLANT_WRITES
+        value: "false"
+      - key: DEPLOYMENT_TIER
+        value: cloud
+      - key: EDGE_INGEST_TOKEN
+        sync: false                  # leave empty unless a read-only edge gateway is deployed
+      # - key: DATABASE_URL
+      #   fromDatabase:
+      #     name: bf-twin-db
+      #     property: connectionString
+# databases:
+#   - name: bf-twin-db
+#     plan: free
+#     databaseName: bf_twin
+#     user: bf_twin
+#     ipAllowList: []               # private network only
